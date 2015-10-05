@@ -9,6 +9,7 @@ build/
 !default.mode2v3
 *.perspectivev3
 !default.perspectivev3
+project.xcworkspace
 xcuserdata
 *.xccheckout
 *.moved-aside
@@ -23,8 +24,13 @@ DerivedData
 # you should judge for yourself, the pros and cons are mentioned at:
 # http://guides.cocoapods.org/using/using-cocoapods.html#should-i-ignore-the-pods-directory-in-source-control
 #
-# Pods/
-
+Pods/
+Podfile.lock
+.DS_Store
+*.swp
+tmp
+*~.nib
+ 
 # Carthage
 #
 # Add this line if you want to avoid checking in source code from Carthage dependencies.
