@@ -19,6 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         for i in 0...100 {
             array[i] = -10 + random() % 200
         }
+        array.writeToTmp()
         array.debugQuickLookObject()
         // Override point for customization after application launch.
         return true

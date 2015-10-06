@@ -42,6 +42,13 @@ public class JRMutableArray : NSObject {
         }
     }
     
+    func writeToTmp() {
+        let image = debugQuickLookObject()
+        let fileManager = NSFileManager.defaultManager()
+        let myImageData = UIImagePNGRepresentation(image as! UIImage)
+        fileManager.createFileAtPath("/tmp/myimage.png", contents: myImageData, attributes: nil)
+    }
+    
     func debugQuickLookObject() -> AnyObject? {
         let itemHeight : Double = 12
         let viewWidth : Double = 600
