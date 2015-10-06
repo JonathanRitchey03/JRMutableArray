@@ -2,6 +2,8 @@ import Foundation
 import UIKit
 
 public class JRMutableArray : NSObject {
+    private let itemHeight = 4
+    private let viewWidth = 600
     private var storage : NSMutableArray
     private var queue : dispatch_queue_t
     public var textColor : UIColor?
@@ -42,12 +44,8 @@ public class JRMutableArray : NSObject {
         }
     }
     
-    private var qlWidth : CGFloat = 300.0
-    private var qlLineHeight = 14
-    
     func debugQuickLookObject() -> AnyObject? {
-        let lineHeight = 14
-        let size = CGSizeMake(300,CGFloat(self.storage.count*lineHeight))
+        let size = CGSizeMake(CGFloat(viewWidth),CGFloat(self.storage.count*itemHeight))
         UIGraphicsBeginImageContextWithOptions(size, true, 0)
         UIColor.blackColor().setFill()
         UIRectFill(CGRectMake(0, 0, size.width, size.height))
@@ -62,9 +60,9 @@ public class JRMutableArray : NSObject {
     private func drawIndices(textColor:UIColor) {
         let paragraphStyle = NSParagraphStyle.defaultParagraphStyle().mutableCopy() as! NSMutableParagraphStyle
         paragraphStyle.lineBreakMode = NSLineBreakMode.ByTruncatingTail
-        let textFontAttributes = [NSFontAttributeName: UIFont.systemFontOfSize(CGFloat(12)), NSForegroundColorAttributeName: textColor, NSParagraphStyleAttributeName: paragraphStyle]
+        let textFontAttributes = [NSFontAttributeName: UIFont.systemFontOfSize(CGFloat(itemHeight)), NSForegroundColorAttributeName: textColor, NSParagraphStyleAttributeName: paragraphStyle]
         for i in 0..<self.count() {
-            let y = i * qlLineHeight
+            let y = i * itemHeight
             let string : NSString? = self.storage.objectAtIndex(i).description
             if string != nil {
                 let indexString = String(i)
@@ -76,12 +74,12 @@ public class JRMutableArray : NSObject {
     private func drawObjectDescriptions(xPercentage:CGFloat, textColor:UIColor) {
         let paragraphStyle = NSParagraphStyle.defaultParagraphStyle().mutableCopy() as! NSMutableParagraphStyle
         paragraphStyle.lineBreakMode = NSLineBreakMode.ByTruncatingTail
-        let textFontAttributes = [NSFontAttributeName: UIFont.systemFontOfSize(CGFloat(12)), NSForegroundColorAttributeName: textColor, NSParagraphStyleAttributeName: paragraphStyle]
+        let textFontAttributes = [NSFontAttributeName: UIFont.systemFontOfSize(CGFloat(itemHeight)), NSForegroundColorAttributeName: textColor, NSParagraphStyleAttributeName: paragraphStyle]
         for i in 0..<self.count() {
-            let y = i * qlLineHeight
+            let y = i * itemHeight
             let string : NSString? = self.storage.objectAtIndex(i).description
             if string != nil {
-                string?.drawAtPoint(CGPointMake(xPercentage * qlWidth, CGFloat(y)), withAttributes: textFontAttributes)
+                string?.drawAtPoint(CGPointMake(xPercentage * CGFloat(viewWidth), CGFloat(y)), withAttributes: textFontAttributes)
             }
         }
     }
@@ -127,9 +125,8 @@ public class JRMutableArray : NSObject {
     
     private func getPercentageInRange(d : Double, min : Double, max : Double) -> Double {
         let delta = max - min
-        let dNorm = d - min
         if delta != 0 {
-            let percentage = dNorm / delta
+            let percentage = d / delta
             return percentage
         }
         return 0
@@ -140,15 +137,28 @@ public class JRMutableArray : NSObject {
             var min : Double = Double.NaN
             var max : Double = Double.NaN
             (min,max) = getRange()
+            if ( min > 0 ) {
+                min = 0
+            }
             for i in 0..<self.count() {
-                let y = i * qlLineHeight
-                let barHeight : CGFloat = CGFloat(qlLineHeight - 2)
+                let y = i * itemHeight
+                let barHeight : CGFloat = CGFloat(itemHeight - 2)
                 let object : AnyObject? = self.storage.objectAtIndex(i)
                 if object != nil {
                     if object is Double || object is Float || object is Int {
                         let d = getDoubleForObject(object)
-                        let barWidth = getPercentageInRange(d, min: min, max: max) * Double(qlWidth)
-                        let rectPath = UIBezierPath(rect: CGRectMake(0,CGFloat(y+1),CGFloat(barWidth),barHeight))
+                        var x0Line : Double = 0
+                        if ( min < 0 ) {
+                            x0Line = getPercentageInRange(-min, min: min, max: max) * Double(viewWidth)
+                        }
+                        var rectPath : UIBezierPath
+                        if ( d > 0 ) {
+                            let posBarWidth = getPercentageInRange(d, min: min, max: max) * Double(viewWidth)
+                            rectPath = UIBezierPath(rect: CGRectMake(CGFloat(x0Line),CGFloat(y+1),CGFloat(posBarWidth),barHeight))
+                        } else {
+                            let negBarWidth = getPercentageInRange(-d, min: min, max: max) * Double(viewWidth)
+                            rectPath = UIBezierPath(rect: CGRectMake(CGFloat(x0Line - negBarWidth),CGFloat(y+1),CGFloat(negBarWidth),barHeight))
+                        }
                         UIColor.blueColor().setFill()
                         rectPath.fill()
                     }

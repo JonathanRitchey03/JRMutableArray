@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         var array = JRMutableArray()
         for i in 0...100 {
-            array[i] = -50 + random() % 100
+            array[i] = -10 + random() % 200
         }
         array.debugQuickLookObject()
         // Override point for customization after application launch.
