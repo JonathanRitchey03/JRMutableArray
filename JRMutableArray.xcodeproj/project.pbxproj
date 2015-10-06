@@ -14,6 +14,7 @@
 		AC447CBF1BC2BCDE00B4A069 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AC447CBD1BC2BCDE00B4A069 /* LaunchScreen.storyboard */; };
 		AC447CCA1BC2BCDE00B4A069 /* JRMutableArrayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC447CC91BC2BCDE00B4A069 /* JRMutableArrayTests.swift */; };
 		AC447CD61BC2C03800B4A069 /* JRMutableArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC447CD51BC2C03800B4A069 /* JRMutableArray.swift */; settings = {ASSET_TAGS = (); }; };
+		AC447CD81BC3FFEC00B4A069 /* JRDrawKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC447CD71BC3FFEC00B4A069 /* JRDrawKit.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +39,7 @@
 		AC447CC91BC2BCDE00B4A069 /* JRMutableArrayTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JRMutableArrayTests.swift; sourceTree = "<group>"; };
 		AC447CCB1BC2BCDE00B4A069 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AC447CD51BC2C03800B4A069 /* JRMutableArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JRMutableArray.swift; sourceTree = "<group>"; };
+		AC447CD71BC3FFEC00B4A069 /* JRDrawKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JRDrawKit.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +105,7 @@
 			isa = PBXGroup;
 			children = (
 				AC447CD51BC2C03800B4A069 /* JRMutableArray.swift */,
+				AC447CD71BC3FFEC00B4A069 /* JRDrawKit.swift */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -207,6 +210,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AC447CD81BC3FFEC00B4A069 /* JRDrawKit.swift in Sources */,
 				AC447CB71BC2BCDE00B4A069 /* ViewController.swift in Sources */,
 				AC447CB51BC2BCDE00B4A069 /* AppDelegate.swift in Sources */,
 				AC447CD61BC2C03800B4A069 /* JRMutableArray.swift in Sources */,
