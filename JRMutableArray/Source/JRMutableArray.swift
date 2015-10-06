@@ -4,10 +4,12 @@ import UIKit
 public class JRMutableArray : NSObject {
 
     private var storage : NSMutableArray
+    private var commandHistory : NSMutableArray
     private var queue : dispatch_queue_t
     
     override init() {
         storage = NSMutableArray()
+        commandHistory = NSMutableArray()
         queue = dispatch_queue_create("JRMutableArray Queue", DISPATCH_QUEUE_CONCURRENT)
     }
     
@@ -37,25 +39,45 @@ public class JRMutableArray : NSObject {
                     } else {
                         self?.storage.insertObject(newValue!, atIndex: index)
                     }
+                    let commandArray = NSMutableArray()
+                    commandArray.addObject(index)
+                    commandArray.addObject(newValue!)
+                    self?.commandHistory.addObject(commandArray)
                 }
             })
         }
     }
     
     func writeToTmp() {
-        let image = debugQuickLookObject()
-        let fileManager = NSFileManager.defaultManager()
-        let myImageData = UIImagePNGRepresentation(image as! UIImage)
-        fileManager.createFileAtPath("/tmp/myimage.png", contents: myImageData, attributes: nil)
+        let tempArray = NSMutableArray()
+        for i in 0..<commandHistory.count {
+            let commandArray = commandHistory.objectAtIndex(i) as! NSMutableArray
+            let index = commandArray[0] as! Int
+            let object = commandArray[1]
+            if index < tempArray.count {
+                tempArray.replaceObjectAtIndex(index, withObject: object)
+            } else {
+                tempArray.insertObject(object, atIndex: index)
+            }
+            let image = renderArray(tempArray,maxCount:Int(storage.count))
+            let fileManager = NSFileManager.defaultManager()
+            let myImageData = UIImagePNGRepresentation(image)
+            let path = "/Users/kurbo/Desktop/arrayTest/myimage\(i).png"
+            fileManager.createFileAtPath(path, contents: myImageData, attributes: nil)
+        }
+    }
+
+    func debugQuickLookObject() -> AnyObject? {
+        return renderArray(storage, maxCount:Int(storage.count))
     }
     
-    func debugQuickLookObject() -> AnyObject? {
+    func renderArray(array:NSMutableArray, maxCount: Int) -> UIImage {
         let itemHeight : Double = 12
         let viewWidth : Double = 600
         let drawKit = JRDrawKit()
-        drawKit.currentArray = storage
+        drawKit.currentArray = array
         drawKit.currentItemHeight = itemHeight
-        let size = CGSizeMake(CGFloat(viewWidth),CGFloat(Double(self.storage.count)*itemHeight))
+        let size = CGSizeMake(CGFloat(viewWidth),CGFloat(Double(maxCount)*itemHeight))
         UIGraphicsBeginImageContextWithOptions(size, true, 0)
         UIColor.blackColor().setFill()
         UIRectFill(CGRectMake(0, 0, size.width, size.height))
