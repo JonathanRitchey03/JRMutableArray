@@ -13,6 +13,7 @@
 		AC447CBC1BC2BCDE00B4A069 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AC447CBB1BC2BCDE00B4A069 /* Assets.xcassets */; };
 		AC447CBF1BC2BCDE00B4A069 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AC447CBD1BC2BCDE00B4A069 /* LaunchScreen.storyboard */; };
 		AC447CCA1BC2BCDE00B4A069 /* JRMutableArrayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC447CC91BC2BCDE00B4A069 /* JRMutableArrayTests.swift */; };
+		AC447CD61BC2C03800B4A069 /* JRMutableArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC447CD51BC2C03800B4A069 /* JRMutableArray.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +37,7 @@
 		AC447CC51BC2BCDE00B4A069 /* JRMutableArrayTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JRMutableArrayTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC447CC91BC2BCDE00B4A069 /* JRMutableArrayTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JRMutableArrayTests.swift; sourceTree = "<group>"; };
 		AC447CCB1BC2BCDE00B4A069 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AC447CD51BC2C03800B4A069 /* JRMutableArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JRMutableArray.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +79,7 @@
 		AC447CB31BC2BCDE00B4A069 /* JRMutableArray */ = {
 			isa = PBXGroup;
 			children = (
+				AC447CD41BC2C03800B4A069 /* Source */,
 				AC447CB41BC2BCDE00B4A069 /* AppDelegate.swift */,
 				AC447CB61BC2BCDE00B4A069 /* ViewController.swift */,
 				AC447CB81BC2BCDE00B4A069 /* Main.storyboard */,
@@ -94,6 +97,14 @@
 				AC447CCB1BC2BCDE00B4A069 /* Info.plist */,
 			);
 			path = JRMutableArrayTests;
+			sourceTree = "<group>";
+		};
+		AC447CD41BC2C03800B4A069 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				AC447CD51BC2C03800B4A069 /* JRMutableArray.swift */,
+			);
+			path = Source;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -198,6 +209,7 @@
 			files = (
 				AC447CB71BC2BCDE00B4A069 /* ViewController.swift in Sources */,
 				AC447CB51BC2BCDE00B4A069 /* AppDelegate.swift in Sources */,
+				AC447CD61BC2C03800B4A069 /* JRMutableArray.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -387,6 +399,7 @@
 				AC447CD01BC2BCDE00B4A069 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		AC447CD11BC2BCDE00B4A069 /* Build configuration list for PBXNativeTarget "JRMutableArrayTests" */ = {
 			isa = XCConfigurationList;
@@ -395,6 +408,7 @@
 				AC447CD31BC2BCDE00B4A069 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
