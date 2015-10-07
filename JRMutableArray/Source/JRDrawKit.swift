@@ -5,17 +5,19 @@ class JRDrawKit: NSObject {
     var currentArray : NSMutableArray!
     var currentColor : UIColor!
     var currentItemHeight : Double!
+    var currentFontHeight : Double!
     
     override init() {
         currentColor = UIColor.whiteColor()
-        currentItemHeight = 14
+        currentFontHeight = 8
+        currentItemHeight = currentFontHeight+2
         currentArray = []
     }
     
     internal func drawIndices(xPos: Double) {
         let paragraphStyle = NSParagraphStyle.defaultParagraphStyle().mutableCopy() as! NSMutableParagraphStyle
         paragraphStyle.lineBreakMode = NSLineBreakMode.ByTruncatingTail
-        let textFontAttributes = [NSFontAttributeName: UIFont.systemFontOfSize(CGFloat(currentItemHeight-2)), NSForegroundColorAttributeName: currentColor, NSParagraphStyleAttributeName: paragraphStyle]
+        let textFontAttributes = [NSFontAttributeName: UIFont.boldSystemFontOfSize(CGFloat(currentFontHeight)), NSForegroundColorAttributeName: currentColor, NSParagraphStyleAttributeName: paragraphStyle]
         for i in 0..<currentArray.count {
             let y = Double(i) * currentItemHeight
             let indexString = String(i)
@@ -34,7 +36,7 @@ class JRDrawKit: NSObject {
     internal func drawObjectDescriptions(xPos:Double) {
         let paragraphStyle = NSParagraphStyle.defaultParagraphStyle().mutableCopy() as! NSMutableParagraphStyle
         paragraphStyle.lineBreakMode = NSLineBreakMode.ByTruncatingTail
-        let textFontAttributes = [NSFontAttributeName: UIFont.systemFontOfSize(CGFloat(currentItemHeight-2)), NSForegroundColorAttributeName: currentColor, NSParagraphStyleAttributeName: paragraphStyle]
+        let textFontAttributes = [NSFontAttributeName: UIFont.boldSystemFontOfSize(CGFloat(currentFontHeight)), NSForegroundColorAttributeName: currentColor, NSParagraphStyleAttributeName: paragraphStyle]
         for i in 0..<currentArray.count {
             let y = Double(i) * currentItemHeight
             let desc = objectDescription(currentArray.objectAtIndex(i))
@@ -105,7 +107,45 @@ class JRDrawKit: NSObject {
             drawLine(0, y0: y, x1: viewWidth, y1: y)
         }
     }
+
+    func getStringWidth(string: NSString) -> Double {
+        let size : CGSize = string.sizeWithAttributes([NSFontAttributeName: UIFont.systemFontOfSize(CGFloat(currentFontHeight))])
+        return Double(size.width)
+    }
     
+    func renderArray(array:NSMutableArray, maxCount: Int) -> UIImage {
+        currentFontHeight = 8
+        currentItemHeight = currentFontHeight + 2
+        currentArray = array
+        let viewWidth = 200.0
+        let size = CGSizeMake(CGFloat(viewWidth),CGFloat(Double(maxCount)*currentItemHeight))
+        UIGraphicsBeginImageContextWithOptions(size, true, 0)
+        UIColor.blackColor().setFill()
+        UIRectFill(CGRectMake(0, 0, size.width, size.height))
+        // .....................................................................
+        //    |                        |       |
+        //    | <-    indexSpace    -> | <- -> |
+        //    V                                V
+        //  leftMarginX                    objectDescX
+        //
+        let leftMarginX : Double = 2
+        let lastIndexString = "\(maxCount-1)"
+        let indexSpace = getStringWidth(lastIndexString) + 2
+        let objectLineX = leftMarginX + indexSpace
+        let objectDescX = objectLineX + 2
+        currentColor = UIColor.grayColor()
+        drawLines(viewWidth)
+        drawLine( objectLineX, y0: 0, x1:objectLineX, y1: Double(size.height))
+        currentColor = UIColor.blueColor()
+        drawBarsIfNumbers( objectDescX, viewWidth: viewWidth)
+        currentColor = UIColor.whiteColor()
+        drawIndices(leftMarginX)
+        drawObjectDescriptions(objectDescX)
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return image
+    }
+
     internal func drawBarsIfNumbers(xPos:Double, viewWidth: Double) {
         if arrayHasNumber() {
             var min : Double = Double.NaN
