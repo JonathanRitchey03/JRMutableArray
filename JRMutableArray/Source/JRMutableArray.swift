@@ -64,7 +64,7 @@ public class JRMutableArray : NSObject {
             let image = drawKit.renderArray(tempArray,maxCount:Int(storage.count))
             let fileManager = NSFileManager.defaultManager()
             let myImageData = UIImagePNGRepresentation(image)
-            let path = "/Users/kurbo/Desktop/arrayTest/myimage\(i).png"
+            let path = "/tmp/myarray\(i).png"
             fileManager.createFileAtPath(path, contents: myImageData, attributes: nil)
         }
     }

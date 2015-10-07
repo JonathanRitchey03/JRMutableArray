@@ -114,8 +114,8 @@ class JRDrawKit: NSObject {
     }
     
     func renderArray(array:NSMutableArray, maxCount: Int) -> UIImage {
-        currentFontHeight = 8
-        currentItemHeight = currentFontHeight + 2
+        currentFontHeight = 10.0
+        currentItemHeight = currentFontHeight + 2.0
         currentArray = array
         let viewWidth = 200.0
         let size = CGSizeMake(CGFloat(viewWidth),CGFloat(Double(maxCount)*currentItemHeight))
@@ -148,9 +148,7 @@ class JRDrawKit: NSObject {
 
     internal func drawBarsIfNumbers(xPos:Double, viewWidth: Double) {
         if arrayHasNumber() {
-            var min : Double = Double.NaN
-            var max : Double = Double.NaN
-            (min,max) = getRange()
+            var (min,max) = getRange()
             if ( min > 0 ) {
                 min = 0
             }
@@ -174,7 +172,7 @@ class JRDrawKit: NSObject {
                             let negBarWidth = getPercentageInRange(-d, min: min, max: max) * width
                             rectPath = UIBezierPath(rect: CGRectMake(CGFloat(x0Line - negBarWidth),CGFloat(y+1),CGFloat(negBarWidth),barHeight))
                         }
-                        UIColor.blueColor().setFill()
+                        currentColor.setFill()
                         rectPath.fill()
                     }
                 }
