@@ -52,7 +52,7 @@ class JRDrawKit: NSObject {
     }
     
     private func isObjectANumber(object:AnyObject?)->Bool {
-        if object is Double || object is Float || object is Int || object is CGFloat {
+        if object is NSNumber {
             return true
         }
         return false
