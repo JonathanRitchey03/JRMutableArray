@@ -44,17 +44,24 @@ class JRDrawKit: NSObject {
         }
     }
     
-    private func getDoubleForObject(object:AnyObject?)->Double {
-        if object is Double || object is Float || object is Int {
-            return object as! Double
+    private func getDoubleForObject(object:AnyObject?)->Double? {
+        if self.isObjectANumber(object) {
+            return object as? Double
         }
-        return Double.NaN
+        return nil
+    }
+    
+    private func isObjectANumber(object:AnyObject?)->Bool {
+        if object is Double || object is Float || object is Int || object is CGFloat {
+            return true
+        }
+        return false
     }
     
     private func arrayHasNumber()->Bool {
         for i in 0..<currentArray.count {
             let object : AnyObject? = currentArray.objectAtIndex(i)
-            if object is Double || object is Float || object is Int {
+            if self.isObjectANumber(object) {
                 return true
             }
         }
@@ -62,25 +69,23 @@ class JRDrawKit: NSObject {
     }
     
     private func getRange() -> (Double,Double) {
-        var min : Double = Double.NaN
-        var max : Double = Double.NaN
+        var min : Double?
+        var max : Double?
         if arrayHasNumber() {
             for i in 0..<currentArray.count {
                 let object : AnyObject? = currentArray.objectAtIndex(i)
-                let d : Double = getDoubleForObject(object)
-                if d != Double.NaN && min.isNaN {
+                let d : Double? = getDoubleForObject(object)
+                if d != nil && min == nil {
                     min = d
                     max = d
                 }
-                if ( d < min ) {
-                    min = d
-                }
-                if ( d > max ) {
-                    max = d
-                }
+                if ( d < min ) { min = d }
+                if ( d > max ) { max = d }
             }
         }
-        return (min,max)
+        if ( min == nil ) { min = 0 }
+        if ( max == nil ) { max = 0 }
+        return (min!,max!)
     }
     
     private func getPercentageInRange(d : Double, min : Double, max : Double) -> Double {
@@ -158,7 +163,7 @@ class JRDrawKit: NSObject {
                 let barHeight : CGFloat = CGFloat(currentItemHeight - 2)
                 let object : AnyObject? = currentArray.objectAtIndex(i)
                 if object != nil {
-                    if object is Double || object is Float || object is Int {
+                    if self.isObjectANumber(object) {
                         let d = getDoubleForObject(object)
                         var x0Line : Double = xPos
                         if ( min < 0 ) {
@@ -166,10 +171,10 @@ class JRDrawKit: NSObject {
                         }
                         var rectPath : UIBezierPath
                         if ( d > 0 ) {
-                            let posBarWidth = getPercentageInRange(d, min: min, max: max) * width
+                            let posBarWidth = getPercentageInRange(d!, min: min, max: max) * width
                             rectPath = UIBezierPath(rect: CGRectMake(CGFloat(x0Line),CGFloat(y+1),CGFloat(posBarWidth),barHeight))
                         } else {
-                            let negBarWidth = getPercentageInRange(-d, min: min, max: max) * width
+                            let negBarWidth = getPercentageInRange(-d!, min: min, max: max) * width
                             rectPath = UIBezierPath(rect: CGRectMake(CGFloat(x0Line - negBarWidth),CGFloat(y+1),CGFloat(negBarWidth),barHeight))
                         }
                         currentColor.setFill()
@@ -179,5 +184,4 @@ class JRDrawKit: NSObject {
             }
         }
     }
-    
 }

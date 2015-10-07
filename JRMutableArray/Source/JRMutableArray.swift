@@ -28,23 +28,32 @@ public class JRMutableArray : NSObject {
     subscript(index: Int) -> AnyObject? {
         get {
             var value : AnyObject? = nil
-            dispatch_async(queue, { [weak self] in
+            dispatch_sync(queue, { [weak self] in
                 value = self?.storage.objectAtIndex(index)
             })
             return value
         }
         set(newValue) {
             dispatch_barrier_sync(queue, { [weak self] in
-                if newValue != nil {
-                    if index < self?.storage.count {
-                        self?.storage.replaceObjectAtIndex(index, withObject: newValue!)
-                    } else {
-                        self?.storage.insertObject(newValue!, atIndex: index)
+                if let strongSelf = self {
+                    if newValue != nil {
+                        if index < strongSelf.storage.count {
+                            strongSelf.storage.replaceObjectAtIndex(index, withObject: newValue!)
+                        } else {
+                            if ( index > strongSelf.storage.count ) {
+                                // fill array up with NSNull.null until index
+                                let topIndex = strongSelf.storage.count
+                                for i in topIndex..<index {
+                                    strongSelf.storage.insertObject(NSNull(), atIndex: i)
+                                }
+                            }
+                            strongSelf.storage.insertObject(newValue!, atIndex: index)
+                        }
+                        let commandArray = NSMutableArray()
+                        commandArray.addObject(index)
+                        commandArray.addObject(newValue!)
+                        self?.commandHistory.addObject(commandArray)
                     }
-                    let commandArray = NSMutableArray()
-                    commandArray.addObject(index)
-                    commandArray.addObject(newValue!)
-                    self?.commandHistory.addObject(commandArray)
                 }
             })
         }
