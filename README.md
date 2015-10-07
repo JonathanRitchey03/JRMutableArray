@@ -44,6 +44,14 @@ brew install ffmpeg
 ffmpeg -i myarray%d.png -vcodec qtrle myarray.mov
 ```
 
+## Todo
+1. Add unit tests.
+1. Add read/write color to historical renderings.
+1. Add which thread is accessing array.
+1. Add automatic movie playing if ffmpeg is installed.
+1. Add historical range control.
+1. Add ability to mark ranges with a color for debugging purposes, i.e. pivot in sort, or range in binary search.
+
 ## Credits
 - Based on Guan Gui's post on thread-safe mutable dictionaries. https://www.guiguan.net/ggmutabledictionary-thread-safe-nsmutabledictionary/
 

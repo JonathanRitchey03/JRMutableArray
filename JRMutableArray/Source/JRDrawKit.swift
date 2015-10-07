@@ -136,7 +136,7 @@ class JRDrawKit: NSObject {
         currentColor = UIColor.grayColor()
         drawLines(viewWidth)
         drawLine( objectLineX, y0: 0, x1:objectLineX, y1: Double(size.height))
-        currentColor = UIColor.blueColor()
+        currentColor = UIColor(red: 106.0/255.0, green: 172.0/255.0, blue: 218.0/255.0, alpha: 0.7)
         drawBarsIfNumbers( objectDescX, viewWidth: viewWidth)
         currentColor = UIColor.whiteColor()
         drawIndices(leftMarginX)
