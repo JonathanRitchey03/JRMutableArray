@@ -25,6 +25,12 @@ public class JRMutableArray : NSObject {
         return numItems
     }
     
+    func swap(objectAtIndex: Int, withObjectAtIndex: Int) {
+        let temp = self[objectAtIndex]
+        self[objectAtIndex] = self[withObjectAtIndex]
+        self[withObjectAtIndex] = temp
+    }
+    
     subscript(index: Int) -> AnyObject? {
         get {
             var value : AnyObject? = nil

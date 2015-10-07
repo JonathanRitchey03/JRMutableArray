@@ -87,23 +87,12 @@ class JRMutableArrayTests: XCTestCase {
 
     func testQuicksort() {
         let array = JRMutableArray()
-        array[0] = 3
-        array[1] = 1
-        array[2] = 4
-        array[3] = 1
-        array[4] = 5
-        array[5] = 9
-        array[6] = 2
-        array[7] = 6
-        array[8] = 5
-        array[9] = 3
-        array[10] = 5
-        array[11] = 8
-        array[12] = 9
-        array[13] = 7
-        array[14] = 9
-        array[15] = 3
-        self.quicksort(array, leftIndex: 0, rightIndex: array.count() - 1)
+        let size = 100
+        srand(0)
+        for i in 0..<size {
+            array[i] = Int(rand() % 50)
+        }
+        self.quicksort(array, lo: 0, hi: array.count() - 1)
         var previous : Int = array[0] as! Int
         for i in 1..<array.count() {
             let current : Int = array[i] as! Int
@@ -112,29 +101,25 @@ class JRMutableArrayTests: XCTestCase {
         }
     }
     
-    func quicksort(array: JRMutableArray, leftIndex: Int, rightIndex: Int) {
-        if leftIndex < rightIndex {
-            let p = quicksortPartition(array, leftIndex: leftIndex, rightIndex: rightIndex)
-            quicksort(array,leftIndex:leftIndex,rightIndex:p-1)
-            quicksort(array,leftIndex:p+1,rightIndex:rightIndex)
+    func quicksort(array: JRMutableArray, lo: Int, hi: Int) {
+        if lo < hi {
+            let p = quicksortPartition(array, lo: lo, hi: hi)
+            quicksort(array,lo:lo,hi:p-1)
+            quicksort(array,lo:p+1,hi:hi)
         }
     }
     
-    func quicksortPartition(array: JRMutableArray, leftIndex: Int, rightIndex: Int) -> Int {
-        let p : Double = array[leftIndex] as! Double
-        var i = leftIndex+1
-        for j in leftIndex+1...rightIndex {
+    func quicksortPartition(array: JRMutableArray, lo: Int, hi: Int) -> Int {
+        let p : Double = array[hi] as! Double
+        var i = lo
+        for j in lo..<hi {
             let aj : Double = array[j] as! Double
             if aj < p {
-                let temp = array[i]
-                array[i] = array[j]
-                array[j] = temp
+                array.swap(i,withObjectAtIndex:j)
                 i++
             }
         }
-        let temp = array[i-1]
-        array[i-1] = p
-        array[leftIndex] = temp
-        return i-1
+        array.swap(i, withObjectAtIndex: hi)
+        return i
     }
 }
