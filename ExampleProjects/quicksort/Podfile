@@ -1,0 +1,2 @@
+use_frameworks!
+pod 'JRMutableArray', :git => 'https://github.com/JonathanRitchey03/JRMutableArray.git'

@@ -7,6 +7,7 @@ public class JRMutableArray : NSObject {
     private var commandHistory : NSMutableArray
     private var queue : dispatch_queue_t
     private var drawKit : JRDrawKit
+    private var markedRange : NSRange?
     
     override init() {
         storage = NSMutableArray()
@@ -58,11 +59,24 @@ public class JRMutableArray : NSObject {
                         let commandArray = NSMutableArray()
                         commandArray.addObject(index)
                         commandArray.addObject(newValue!)
+                        if strongSelf.markedRange != nil {
+                            commandArray.addObject(NSMakeRange(strongSelf.markedRange!.location, strongSelf.markedRange!.length))
+                        } else {
+                            commandArray.addObject(NSNull())
+                        }
                         self?.commandHistory.addObject(commandArray)
                     }
                 }
             })
         }
+    }
+    
+    func markRange(range:NSRange) {
+        self.markedRange = NSMakeRange(range.location, range.length)
+    }
+    
+    func markIndex(index:Int?) {
+        //drawKit.markedIndex = index
     }
     
     func writeToTmp() {
@@ -71,12 +85,13 @@ public class JRMutableArray : NSObject {
             let commandArray = commandHistory.objectAtIndex(i) as! NSMutableArray
             let index = commandArray[0] as! Int
             let object = commandArray[1]
+            let markedRange = commandArray[2]
             if index < tempArray.count {
                 tempArray.replaceObjectAtIndex(index, withObject: object)
             } else {
                 tempArray.insertObject(object, atIndex: index)
             }
-            let image = drawKit.renderArray(tempArray,maxCount:Int(storage.count))
+            let image = drawKit.renderArray(tempArray,maxCount:Int(storage.count),markedRange:markedRange)
             let fileManager = NSFileManager.defaultManager()
             let myImageData = UIImagePNGRepresentation(image)
             let path = "/tmp/myarray\(i).png"
@@ -85,6 +100,10 @@ public class JRMutableArray : NSObject {
     }
 
     func debugQuickLookObject() -> AnyObject? {
-        return drawKit.renderArray(storage, maxCount:Int(storage.count))
+        var markedRange : AnyObject = NSNull()
+        if (self.markedRange != nil) {
+            markedRange = self.markedRange!
+        }
+        return drawKit.renderArray(storage, maxCount:Int(storage.count), markedRange:markedRange)
     }
 }

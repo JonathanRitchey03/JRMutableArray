@@ -87,10 +87,10 @@ class JRMutableArrayTests: XCTestCase {
 
     func testQuicksort() {
         let array = JRMutableArray()
-        let size = 100
+        let size = 50
         srand(0)
         for i in 0..<size {
-            array[i] = Int(rand() % 50)
+            array[i] = -10 + Int(rand() % 30)
         }
         self.quicksort(array, lo: 0, hi: array.count() - 1)
         var previous : Int = array[0] as! Int
@@ -103,6 +103,7 @@ class JRMutableArrayTests: XCTestCase {
     
     func quicksort(array: JRMutableArray, lo: Int, hi: Int) {
         if lo < hi {
+            array.markRange(NSMakeRange(lo,hi-lo+1))
             let p = quicksortPartition(array, lo: lo, hi: hi)
             quicksort(array,lo:lo,hi:p-1)
             quicksort(array,lo:p+1,hi:hi)

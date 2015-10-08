@@ -6,6 +6,9 @@ class JRDrawKit: NSObject {
     var currentColor : UIColor!
     var currentItemHeight : Double!
     var currentFontHeight : Double!
+    var markedRange : NSRange?
+    var markedIndex : Int?
+    var barStartX : Double!
     
     override init() {
         currentColor = UIColor.whiteColor()
@@ -118,7 +121,7 @@ class JRDrawKit: NSObject {
         return Double(size.width)
     }
     
-    func renderArray(array:NSMutableArray, maxCount: Int) -> UIImage {
+    func renderArray(array:NSMutableArray, maxCount: Int, markedRange: AnyObject) -> UIImage {
         currentFontHeight = 10.0
         currentItemHeight = currentFontHeight + 2.0
         currentArray = array
@@ -142,22 +145,38 @@ class JRDrawKit: NSObject {
         drawLines(viewWidth)
         drawLine( objectLineX, y0: 0, x1:objectLineX, y1: Double(size.height))
         currentColor = UIColor(red: 106.0/255.0, green: 172.0/255.0, blue: 218.0/255.0, alpha: 0.7)
-        drawBarsIfNumbers( objectDescX, viewWidth: viewWidth)
+        barStartX = objectDescX
+        drawBarsIfNumbers(viewWidth)
         currentColor = UIColor.whiteColor()
         drawIndices(leftMarginX)
         drawObjectDescriptions(objectDescX)
+        currentColor = UIColor(red: 0.2, green: 0.2, blue: 0.7, alpha: 0.5)
+        drawRange(viewWidth, markedRange:markedRange)
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return image
     }
 
-    internal func drawBarsIfNumbers(xPos:Double, viewWidth: Double) {
+    internal func drawRange(viewWidth: Double, markedRange: AnyObject ) {
+        if markedRange is NSRange {
+            let range : NSRange = markedRange as! NSRange
+            if  range.length > 0 {
+                let (x0,y0) = (barStartX, Double(range.location) * currentItemHeight)
+                let (x1,y1) = (viewWidth, Double(range.location + range.length) * currentItemHeight)
+                let rectanglePath = UIBezierPath(roundedRect: CGRectMake(CGFloat(x0), CGFloat(y0), CGFloat(x1), CGFloat(y1)), cornerRadius: 10)
+                currentColor.setFill()
+                rectanglePath.fill()
+            }
+        }
+    }
+    
+    internal func drawBarsIfNumbers(viewWidth: Double) {
         if arrayHasNumber() {
             var (min,max) = getRange()
             if ( min > 0 ) {
                 min = 0
             }
-            let width : Double = viewWidth - xPos
+            let width : Double = viewWidth - barStartX
             for i in 0..<currentArray.count {
                 let y = Double(i) * currentItemHeight
                 let barHeight : CGFloat = CGFloat(currentItemHeight - 2)
@@ -165,9 +184,9 @@ class JRDrawKit: NSObject {
                 if object != nil {
                     if self.isObjectANumber(object) {
                         let d = getDoubleForObject(object)
-                        var x0Line : Double = xPos
+                        var x0Line : Double = barStartX
                         if ( min < 0 ) {
-                            x0Line = xPos + getPercentageInRange(-min, min: min, max: max) * width
+                            x0Line = barStartX + getPercentageInRange(-min, min: min, max: max) * width
                         }
                         var rectPath : UIBezierPath
                         if ( d > 0 ) {
