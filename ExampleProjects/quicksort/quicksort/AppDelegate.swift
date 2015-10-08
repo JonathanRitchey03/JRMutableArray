@@ -24,7 +24,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             array[i] = -10 + Int(rand() % 30)
         }
         self.quicksort(array, lo: 0, hi: array.count() - 1)
-        return true
+        
+        // --------------------------------------
+        // Add a breakpoint on "return true"
+        //
+        // Then highlight array and press on the
+        // "eye" icon to view it.
+        // --------------------------------------
+        /* add breakpoint ---> */ return true
     }
 
     func quicksort(array: JRMutableArray, lo: Int, hi: Int) {
