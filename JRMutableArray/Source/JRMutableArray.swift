@@ -9,14 +9,14 @@ public class JRMutableArray : NSObject {
     private var drawKit : JRDrawKit
     private var markedRange : NSRange?
     
-    override init() {
+    public override init() {
         storage = NSMutableArray()
         commandHistory = NSMutableArray()
         queue = dispatch_queue_create("JRMutableArray Queue", DISPATCH_QUEUE_CONCURRENT)
         drawKit = JRDrawKit()
     }
     
-    func count() -> Int {
+    public func count() -> Int {
         var numItems = 0
         dispatch_sync(queue, { [weak self] in
             if self != nil {
@@ -26,13 +26,13 @@ public class JRMutableArray : NSObject {
         return numItems
     }
     
-    func swap(objectAtIndex: Int, withObjectAtIndex: Int) {
+    public func swap(objectAtIndex: Int, withObjectAtIndex: Int) {
         let temp = self[objectAtIndex]
         self[objectAtIndex] = self[withObjectAtIndex]
         self[withObjectAtIndex] = temp
     }
     
-    subscript(index: Int) -> AnyObject? {
+    public subscript(index: Int) -> AnyObject? {
         get {
             var value : AnyObject? = nil
             dispatch_sync(queue, { [weak self] in
@@ -71,15 +71,15 @@ public class JRMutableArray : NSObject {
         }
     }
     
-    func markRange(range:NSRange) {
+    public func markRange(range:NSRange) {
         self.markedRange = NSMakeRange(range.location, range.length)
     }
     
-    func markIndex(index:Int?) {
+    public func markIndex(index:Int?) {
         //drawKit.markedIndex = index
     }
     
-    func writeToTmp() {
+    public func writeToTmp() {
         let tempArray = NSMutableArray()
         for i in 0..<commandHistory.count {
             let commandArray = commandHistory.objectAtIndex(i) as! NSMutableArray
@@ -99,7 +99,7 @@ public class JRMutableArray : NSObject {
         }
     }
 
-    func debugQuickLookObject() -> AnyObject? {
+    public func debugQuickLookObject() -> AnyObject? {
         var markedRange : AnyObject = NSNull()
         if (self.markedRange != nil) {
             markedRange = self.markedRange!

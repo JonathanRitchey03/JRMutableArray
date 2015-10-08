@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import JRMutableArray
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -17,7 +18,36 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         let array = JRMutableArray()
+        let size = 50
+        srand(0)
+        for i in 0..<size {
+            array[i] = -10 + Int(rand() % 30)
+        }
+        self.quicksort(array, lo: 0, hi: array.count() - 1)
         return true
+    }
+
+    func quicksort(array: JRMutableArray, lo: Int, hi: Int) {
+        if lo < hi {
+            array.markRange(NSMakeRange(lo,hi-lo+1))
+            let p = quicksortPartition(array, lo: lo, hi: hi)
+            quicksort(array,lo:lo,hi:p-1)
+            quicksort(array,lo:p+1,hi:hi)
+        }
+    }
+
+    func quicksortPartition(array: JRMutableArray, lo: Int, hi: Int) -> Int {
+        let p : Double = array[hi] as! Double
+        var i = lo
+        for j in lo..<hi {
+            let aj : Double = array[j] as! Double
+            if aj < p {
+                array.swap(i,withObjectAtIndex:j)
+                i++
+            }
+        }
+        array.swap(i, withObjectAtIndex: hi)
+        return i
     }
 
     func applicationWillResignActive(application: UIApplication) {
