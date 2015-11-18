@@ -15,9 +15,9 @@ for i in 0...50 {
 ## How to use QuickLook
 1. Set a breakpoint
 1. Press on the little eye icon when referencing the array.
-1. The array should render out into the a display view supplying an overview for the array's contents.
-1. Note: The description selector is used to print out each object's value.
-1. If the object is a number a blue bar is rendered, otherwise only the text description is used.
+1. The array should render out into a display view supplying an overview for the array's contents.
+1. Note: For object other than numbers, the description selector is used to print out each object's value.
+1. If the object is a number, a blue bar is rendered, otherwise only the text description is used.
 
 ## Rendering history
 Currently the array is supports rendering a time series of images for the entire history of the array, allowing for historical debugging.
