@@ -1,6 +1,9 @@
 # JRMutableArray
 Bare-bones 1D Array for Swift w/ awesome Visualization!
 
+## Demo
+![Alt text](/JRMutableArrayDemo.gif?raw=true "Visualize an Array!")
+
 ## Setup
 1. Drop JRMutableArray.swift and JRDrawKit.swift into your project.
 1. Example code snippet:
@@ -20,7 +23,10 @@ for i in 0...50 {
 1. If the object is a number, a blue bar is rendered, otherwise only the text description is used.
 
 ## Rendering history
-Currently the array is supports rendering a time series of images for the entire history of the array, allowing for historical debugging.
+
+![Alt text](/JRMutableArrayQuickSortDemo.gif?raw=true "Animated Quicksort!")
+
+Currently the array supports rendering a time series of images for the entire history of the array, allowing for historical debugging.
 
 1. Create a /tmp if you don't have a /tmp directory on your root drive.
 1. Set a breakpoint.
