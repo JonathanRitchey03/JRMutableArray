@@ -39,7 +39,7 @@ class JRMutableArrayTests: XCTestCase {
             if num is Double {
                 XCTAssertEqual(num as? Double, Double(i) * 3.14, "numbers inserted must match")
             } else {
-                XCTAssert(false, "expected numbers to be ints")
+                XCTAssert(false, "expected numbers to be doubles")
             }
         }
         XCTAssert(array.debugQuickLookObject() != nil, "quicklook should return something")
@@ -55,7 +55,7 @@ class JRMutableArrayTests: XCTestCase {
             if num is Float {
                 XCTAssertEqual(num as? Float, Float(i) * 3.14, "numbers inserted must match")
             } else {
-                XCTAssert(false, "expected numbers to be ints")
+                XCTAssert(false, "expected numbers to be floats")
             }
         }
         XCTAssert(array.debugQuickLookObject() != nil, "quicklook should return something")
