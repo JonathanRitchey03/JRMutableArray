@@ -1,5 +1,5 @@
 # JRMutableArray
-Bare-bones thread-safe mutable array for Swift with QuickLook support
+Bare-bones 1D Array for Swift w/ awesome Visualization!
 
 ## Setup
 1. Drop JRMutableArray.swift and JRDrawKit.swift into your project.
