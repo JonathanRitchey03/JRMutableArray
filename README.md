@@ -59,6 +59,5 @@ ffmpeg -r 2 -i myarray%d.png -vcodec qtrle myarray.mov
 1. Add support for only keeping track of the last N steps in history to avoid large memory usage.
 
 ## Credits
-- Based on Guan Gui's post on thread-safe mutable dictionaries. https://www.guiguan.net/ggmutabledictionary-thread-safe-nsmutabledictionary/
-
-- Based on Ray Wenderlich's GCD tutorial: http://www.raywenderlich.com/60749/grand-central-dispatch-in-depth-part-1
+- Based on: https://www.guiguan.net/ggmutabledictionary-thread-safe-nsmutabledictionary/
+- and Ray Wenderlich's GCD tutorial: http://www.raywenderlich.com/60749/grand-central-dispatch-in-depth-part-1
