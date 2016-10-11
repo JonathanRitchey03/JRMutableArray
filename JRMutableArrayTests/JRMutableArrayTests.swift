@@ -63,7 +63,7 @@ class JRMutableArrayTests: XCTestCase {
 
     func testSparseInsertion() {
         let array = JRMutableArray()
-        for var i = 2; i < 100; i += 7 {
+        for i in stride(from: 2, to: 100, by: 7) {
             array[i] = i
         }
         for i in 0..<array.count() {
@@ -88,9 +88,8 @@ class JRMutableArrayTests: XCTestCase {
     func testQuicksort() {
         let array = JRMutableArray()
         let size = 50
-        srand(0)
         for i in 0..<size {
-            array[i] = -10 + Int(rand() % 30)
+            array[i] = -10 + Int(arc4random() % 30)
         }
         self.quicksort(array, lo: 0, hi: array.count() - 1)
         var previous : Int = array[0] as! Int
@@ -101,7 +100,7 @@ class JRMutableArrayTests: XCTestCase {
         }
     }
     
-    func quicksort(array: JRMutableArray, lo: Int, hi: Int) {
+    func quicksort(_ array: JRMutableArray, lo: Int, hi: Int) {
         if lo < hi {
             array.markRange(NSMakeRange(lo,hi-lo+1))
             let p = quicksortPartition(array, lo: lo, hi: hi)
@@ -110,14 +109,14 @@ class JRMutableArrayTests: XCTestCase {
         }
     }
     
-    func quicksortPartition(array: JRMutableArray, lo: Int, hi: Int) -> Int {
+    func quicksortPartition(_ array: JRMutableArray, lo: Int, hi: Int) -> Int {
         let p : Double = array[hi] as! Double
         var i = lo
         for j in lo..<hi {
             let aj : Double = array[j] as! Double
             if aj < p {
                 array.swap(i,withObjectAtIndex:j)
-                i++
+                i += 1
             }
         }
         array.swap(i, withObjectAtIndex: hi)

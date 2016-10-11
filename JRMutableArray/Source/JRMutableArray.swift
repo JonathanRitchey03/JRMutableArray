@@ -1,24 +1,24 @@
 import Foundation
 import UIKit
 
-public class JRMutableArray : NSObject {
+open class JRMutableArray : NSObject {
 
-    private var storage : NSMutableArray
-    private var commandHistory : NSMutableArray
-    private var queue : dispatch_queue_t
-    private var drawKit : JRDrawKit
-    private var markedRange : NSRange?
+    fileprivate var storage : NSMutableArray
+    fileprivate var commandHistory : NSMutableArray
+    fileprivate var queue : DispatchQueue
+    fileprivate var drawKit : JRDrawKit
+    fileprivate var markedRange : NSRange?
     
     public override init() {
         storage = NSMutableArray()
         commandHistory = NSMutableArray()
-        queue = dispatch_queue_create("JRMutableArray Queue", DISPATCH_QUEUE_CONCURRENT)
+        queue = DispatchQueue(label: "JRMutableArray Queue", attributes: DispatchQueue.Attributes.concurrent)
         drawKit = JRDrawKit()
     }
     
-    public func count() -> Int {
+    open func count() -> Int {
         var numItems = 0
-        dispatch_sync(queue, { [weak self] in
+        queue.sync(execute: { [weak self] in
             if self != nil {
                 numItems = (self?.storage.count)!
             }
@@ -26,83 +26,83 @@ public class JRMutableArray : NSObject {
         return numItems
     }
     
-    public func swap(objectAtIndex: Int, withObjectAtIndex: Int) {
+    open func swap(_ objectAtIndex: Int, withObjectAtIndex: Int) {
         let temp = self[objectAtIndex]
         self[objectAtIndex] = self[withObjectAtIndex]
         self[withObjectAtIndex] = temp
     }
     
-    public subscript(index: Int) -> AnyObject? {
+    open subscript(index: Int) -> Any? {
         get {
-            var value : AnyObject? = nil
-            dispatch_sync(queue, { [weak self] in
-                value = self?.storage.objectAtIndex(index)
+            var value : Any? = nil
+            queue.sync(execute: { [weak self] in
+                value = self?.storage.object(at: index) as Any?
             })
             return value
         }
         set(newValue) {
-            dispatch_barrier_sync(queue, { [weak self] in
+            queue.sync(flags: .barrier, execute: { [weak self] in
                 if let strongSelf = self {
                     if newValue != nil {
                         if index < strongSelf.storage.count {
-                            strongSelf.storage.replaceObjectAtIndex(index, withObject: newValue!)
+                            strongSelf.storage.replaceObject(at: index, with: newValue!)
                         } else {
                             if ( index > strongSelf.storage.count ) {
                                 // fill array up with NSNull.null until index
                                 let topIndex = strongSelf.storage.count
                                 for i in topIndex..<index {
-                                    strongSelf.storage.insertObject(NSNull(), atIndex: i)
+                                    strongSelf.storage.insert(NSNull(), at: i)
                                 }
                             }
-                            strongSelf.storage.insertObject(newValue!, atIndex: index)
+                            strongSelf.storage.insert(newValue!, at: index)
                         }
                         let commandArray = NSMutableArray()
-                        commandArray.addObject(index)
-                        commandArray.addObject(newValue!)
+                        commandArray.add(index)
+                        commandArray.add(newValue!)
                         if strongSelf.markedRange != nil {
-                            commandArray.addObject(NSMakeRange(strongSelf.markedRange!.location, strongSelf.markedRange!.length))
+                            commandArray.add(NSMakeRange(strongSelf.markedRange!.location, strongSelf.markedRange!.length))
                         } else {
-                            commandArray.addObject(NSNull())
+                            commandArray.add(NSNull())
                         }
-                        self?.commandHistory.addObject(commandArray)
+                        self?.commandHistory.add(commandArray)
                     }
                 }
             })
         }
     }
     
-    public func markRange(range:NSRange) {
+    open func markRange(_ range:NSRange) {
         self.markedRange = NSMakeRange(range.location, range.length)
     }
     
-    public func markIndex(index:Int?) {
+    open func markIndex(_ index:Int?) {
         //drawKit.markedIndex = index
     }
     
-    public func writeToTmp() {
+    open func writeToTmp() {
         let tempArray = NSMutableArray()
         for i in 0..<commandHistory.count {
-            let commandArray = commandHistory.objectAtIndex(i) as! NSMutableArray
+            let commandArray = commandHistory.object(at: i) as! NSMutableArray
             let index = commandArray[0] as! Int
             let object = commandArray[1]
             let markedRange = commandArray[2]
             if index < tempArray.count {
-                tempArray.replaceObjectAtIndex(index, withObject: object)
+                tempArray.replaceObject(at: index, with: object)
             } else {
-                tempArray.insertObject(object, atIndex: index)
+                tempArray.insert(object, at: index)
             }
             let image = drawKit.renderArray(tempArray,maxCount:Int(storage.count),markedRange:markedRange)
-            let fileManager = NSFileManager.defaultManager()
+            let fileManager = FileManager.default
             let myImageData = UIImagePNGRepresentation(image)
             let path = "/tmp/myarray\(i).png"
-            fileManager.createFileAtPath(path, contents: myImageData, attributes: nil)
+            fileManager.createFile(atPath: path, contents: myImageData, attributes: nil)
         }
     }
 
-    public func debugQuickLookObject() -> AnyObject? {
+    open func debugQuickLookObject() -> AnyObject? {
         var markedRange : AnyObject = NSNull()
         if (self.markedRange != nil) {
-            markedRange = self.markedRange!
+            markedRange = self.markedRange! as AnyObject
         }
         return drawKit.renderArray(storage, maxCount:Int(storage.count), markedRange:markedRange)
     }

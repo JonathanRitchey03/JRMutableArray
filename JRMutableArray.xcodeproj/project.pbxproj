@@ -13,8 +13,8 @@
 		AC447CBC1BC2BCDE00B4A069 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AC447CBB1BC2BCDE00B4A069 /* Assets.xcassets */; };
 		AC447CBF1BC2BCDE00B4A069 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AC447CBD1BC2BCDE00B4A069 /* LaunchScreen.storyboard */; };
 		AC447CCA1BC2BCDE00B4A069 /* JRMutableArrayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC447CC91BC2BCDE00B4A069 /* JRMutableArrayTests.swift */; };
-		AC447CD61BC2C03800B4A069 /* JRMutableArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC447CD51BC2C03800B4A069 /* JRMutableArray.swift */; settings = {ASSET_TAGS = (); }; };
-		AC447CD81BC3FFEC00B4A069 /* JRDrawKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC447CD71BC3FFEC00B4A069 /* JRDrawKit.swift */; settings = {ASSET_TAGS = (); }; };
+		AC447CD61BC2C03800B4A069 /* JRMutableArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC447CD51BC2C03800B4A069 /* JRMutableArray.swift */; };
+		AC447CD81BC3FFEC00B4A069 /* JRDrawKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC447CD71BC3FFEC00B4A069 /* JRDrawKit.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -154,14 +154,16 @@
 		AC447CA91BC2BCDE00B4A069 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0700;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = com.jonathanritchey;
 				TargetAttributes = {
 					AC447CB01BC2BCDE00B4A069 = {
 						CreatedOnToolsVersion = 7.0;
+						LastSwiftMigration = 0800;
 					};
 					AC447CC41BC2BCDE00B4A069 = {
 						CreatedOnToolsVersion = 7.0;
+						LastSwiftMigration = 0800;
 						TestTargetID = AC447CB01BC2BCDE00B4A069;
 					};
 				};
@@ -268,8 +270,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -313,8 +317,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -333,6 +339,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -346,6 +353,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jonathanritchey.JRMutableArray;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -357,6 +365,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jonathanritchey.JRMutableArray;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -368,6 +377,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jonathanritchey.JRMutableArrayTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/JRMutableArray.app/JRMutableArray";
 			};
 			name = Debug;
@@ -380,6 +390,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jonathanritchey.JRMutableArrayTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/JRMutableArray.app/JRMutableArray";
 			};
 			name = Release;
