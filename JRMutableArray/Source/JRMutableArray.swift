@@ -101,8 +101,8 @@ open class JRMutableArray : NSObject {
 
     open func debugQuickLookObject() -> AnyObject? {
         var markedRange : AnyObject = NSNull()
-        if (self.markedRange != nil) {
-            markedRange = self.markedRange! as AnyObject
+        if let aMarkedRange = self.markedRange {
+            markedRange = aMarkedRange as AnyObject
         }
         return drawKit.renderArray(storage, maxCount:Int(storage.count), markedRange:markedRange)
     }

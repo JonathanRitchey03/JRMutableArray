@@ -16,10 +16,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         let array = JRMutableArray()
-        for i in 0...10 {
+        for i in 0...20 {
             array[i] = -100 + Int(arc4random() % 200)
         }
-        // Override point for customization after application launch.
+        // Place breakpoint here to observe array.
         return true
     }
 
