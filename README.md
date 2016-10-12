@@ -1,6 +1,8 @@
 # JRMutableArray
 Bare-bones 1D Array for Swift w/ awesome Visualization!
 
+[![codebeat badge](https://codebeat.co/badges/d5bc952d-890a-4efb-bcc0-fd960734df1d)](https://codebeat.co/projects/github-com-jonathanritchey03-jrmutablearray)
+
 ## Demo
 ![Alt text](/JRMutableArrayDemo.gif?raw=true "Visualize an Array!")
 
