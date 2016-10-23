@@ -2,8 +2,7 @@
 //  ViewController.swift
 //  JRMutableArray
 //
-//  Created by Kurbo on 10/5/15.
-//  Copyright © 2015 com.jonathanritchey. All rights reserved.
+//  Created by Jonathan Ritchey on 10/5/15.
 //
 
 import UIKit
