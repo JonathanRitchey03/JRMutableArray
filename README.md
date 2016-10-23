@@ -1,6 +1,9 @@
 # JRMutableArray
 Bare-bones 1D Array for Swift w/ awesome Visualization!
 
+[![Build Status](https://www.bitrise.io/app/285e3efb30c07e22.svg?token=yMh7S2W8To48ugOVAV8h0A&branch=master)](https://www.bitrise.io/app/285e3efb30c07e22)
+![Platforms](https://img.shields.io/badge/platforms-ios-green.svg)
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
 [![codebeat badge](https://codebeat.co/badges/d5bc952d-890a-4efb-bcc0-fd960734df1d)](https://codebeat.co/projects/github-com-jonathanritchey03-jrmutablearray)
 
 ## Demo
