@@ -16,6 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             array[i] = -100 + Int(arc4random() % 200)
         }
         // Place breakpoint here to observe array.
+        array.debugQuickLookObject()
         return true
     }
 

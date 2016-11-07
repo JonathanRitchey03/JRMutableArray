@@ -56,7 +56,12 @@ class JRDrawKit {
         }
         fileprivate func getDoubleForObject(_ object:AnyObject?)->Double? {
             if self.isObjectANumber(object) {
-                return object as? Double
+                if let aInt = object as? Int {
+                    return Double(aInt)
+                } else if let aDouble = object as? Double {
+                    return aDouble
+                }
+                return nil
             }
             return nil
         }
@@ -199,24 +204,21 @@ class JRDrawKit {
                 let y = Double(i) * properties.currentItemHeight
                 let barHeight : CGFloat = CGFloat(properties.currentItemHeight - 2)
                 let object : AnyObject? = currentArray.object(at: i) as AnyObject?
-                if object != nil {
-                    if utils.isObjectANumber(object) {
-                        let d = utils.getDoubleForObject(object)
+                if let d = utils.getDoubleForObject(object) {
                         var x0Line : Double = properties.barStartX
                         if ( min < 0 ) {
                             x0Line = properties.barStartX + utils.getPercentageInRange(-min, min: min, max: max) * width
                         }
                         var rectPath : UIBezierPath
                         if ( d > 0 ) {
-                            let posBarWidth = utils.getPercentageInRange(d!, min: min, max: max) * width
+                            let posBarWidth = utils.getPercentageInRange(d, min: min, max: max) * width
                             rectPath = UIBezierPath(rect: CGRect(x: CGFloat(x0Line),y: CGFloat(y+1),width: CGFloat(posBarWidth),height: barHeight))
                         } else {
-                            let negBarWidth = utils.getPercentageInRange(-d!, min: min, max: max) * width
+                            let negBarWidth = utils.getPercentageInRange(-d, min: min, max: max) * width
                             rectPath = UIBezierPath(rect: CGRect(x: CGFloat(x0Line - negBarWidth),y: CGFloat(y+1),width: CGFloat(negBarWidth),height: barHeight))
                         }
                         properties.currentColor.setFill()
                         rectPath.fill()
-                    }
                 }
             }
         }
